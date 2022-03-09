@@ -1,6 +1,5 @@
 import sys
 import os
-import csv
 import time
 
 class Filter:
@@ -26,6 +25,31 @@ class Filter:
 
         return result
 
+    def write_data(self, data: list) -> None:
+        with open(self.output_file, 'w') as f:
+            for line in data:
+                f.write(line)
+
+def main():
+    filter = Filter(sys.argv[1], sys.argv[2])
+    data = filter.data
+
+    filtered_data = filter.filter_by_distance_column(data, int(sys.argv[3]), int(sys.argv[4]))
+    filter.write_data(filtered_data)
+
+    print(f"Total Rows: {len(data)}")
+    print(f"Discarded Rows: {len(data) - len(filtered_data)}")
+    print(f"% within desired range: {len(filtered_data)/len(data)*100}")
+
+    # filtered_data = filter.filter_by_distance_column(data, 3, 4)
+    # filtered_data = filter.filter_by_x_column(filtered_data, 1, 2)
+
+    # filter.write_data(filtered_data)
+
+
+if __name__ == "__main__":
+    main()
+
     # @staticmethod
     # def filter_by_x_column(data: list, min_x: int, max_x: int) -> list:
     #     result = []
@@ -37,19 +61,17 @@ class Filter:
 
     #     return result
 
-    def write_data(self, data: list, min_x, max_x) -> None:
-        with open(self.output_file, 'w') as f:
-            for line in data:
-                if (min_x <= )
-                f.write(line)
+    # def write_data(self, data: list, min_x, max_x) -> None:
+    #     with open(self.output_file, 'w') as f:
+    #         for line in data:
+    #             if (min_x <=  <= max_x):
+    #                 f.write(line)
 
     # use filter values to filter
     # def filter_by_distance_column(self, min_dist, max_dist):
     #     # initialize timer and unpackage self values
     #     start_time = time.time()
-    #     (input_file, output_file, min_dist, max_dist, total_rows, discarded_rows) = (
-    #         self.input_file, self.output_file, self.min_dist, self.max_dist, self.total_rows, self.discarded_rows)
-
+    # 
     #     # open input and output files
     #     with open(os.path.expanduser(input_file), newline='') as re, open(os.path.expanduser(output_file), "x") as wr:
     #         # loop through the input file and write to output file while incrementing row counters
@@ -64,19 +86,3 @@ class Filter:
     #     print(f"Discarded Rows: {discarded_rows}")
     #     print(f"% within desired range: {discarded_rows / total_rows * 100}")
     #     print(f"Execution time in seconds: {time.time() - start_time}")
-
-
-def main():
-    filter = Filter(sys.argv[1], sys.argv[2])
-
-    filtered_data = filter.filter_by_distance_column(filter.data, 3, 4)
-    filter.write_data(data)
-
-    # filtered_data = filter.filter_by_distance_column(data, 3, 4)
-    # filtered_data = filter.filter_by_x_column(filtered_data, 1, 2)
-
-    # filter.write_data(filtered_data)
-
-
-if __name__ == "__main__":
-    main()
